@@ -9,7 +9,7 @@
 #include <ctime>
 #include "fmlib.h"
 using namespace std;
-//../src/hw2 ../testcases/p2-1.nets ../testcases/p2-1.cells ../output/p2-1.out
+
 bool cmpCell(const pair<string, int> &a, const pair<string, int> &b) 
 { 
     return a.second > b.second; 
