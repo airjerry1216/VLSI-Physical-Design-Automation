@@ -1,2 +1,2 @@
 # VLSI Physical Design Automation
-NTHU CS6135 2020
+NTHU CS6135 實體設計自動化
