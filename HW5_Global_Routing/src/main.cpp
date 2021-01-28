@@ -137,16 +137,13 @@ bool pushToOpen(vector<vector<GCell> > &GCells, Net &net, pair<int, int> &grid, 
 }
 void AStarSearch(vector<vector<GCell> > &GCells, Net &net, pair<int, int> &grid, int &vertCapacity, int &horizCapacity)
 {
-    //cout << "------------" << net.id <<"-------------" << endl;
     priority_queue<GCell*, vector<GCell*>, Compare> open; //可走到的GCell
     open.push(&GCells[net.pinsCoord[0].second][net.pinsCoord[0].first]);
-    //vector<GCell*> close;
     while(!open.empty()) {
         GCell *top = open.top();
         open.pop();
         top->open = 0;
         top->close = 1;
-        //close.push_back(top);
         if (top->coord.first == net.pinsCoord[1].first && top->coord.second == net.pinsCoord[1].second) {
             double costF = INT_MAX;
             for (int i = 0; i < 4; ++i) {
@@ -161,18 +158,6 @@ void AStarSearch(vector<vector<GCell> > &GCells, Net &net, pair<int, int> &grid,
         }
         pushToOpen(GCells, net, grid, top, open, vertCapacity, horizCapacity);
     }
-    
-    /*cout << "open: ";
-    while(!open.empty()) {
-        GCell* top = open.top();
-        open.pop();
-        cout << "(" << top->coord.first << ", " << top->coord.second << ") "<< top->open << top->close << " ";
-        cout << top->costG << " " << top->costH << " " << top->costF << endl;
-    }
-    cout << "close: ";
-    for (int i = 0; i < close.size(); ++i)
-        cout << "(" << close[i]->coord.first << ", " << close[i]->coord.second << ") " << close[i]->open << close[i]->close << " ";
-    cout << endl;*/
     
     GCell *prev = &GCells[net.pinsCoord[1].second][net.pinsCoord[1].first];
     GCell *ptr =  prev->parent;
@@ -201,17 +186,6 @@ void AStarSearch(vector<vector<GCell> > &GCells, Net &net, pair<int, int> &grid,
     net.path = path;
     corner.push_back(make_pair(prev->coord.first, prev->coord.second));
     net.corner = corner;
-
-    /*cout << "net.path: ";
-    for (int i = 0; i < net.path.size(); ++i) {
-        cout << "(" << net.path[i].first << ", " << net.path[i].second << ") ";
-    }
-    cout << endl;*/
-    /*cout << "net.corner: ";
-    for (int i = 0; i < net.corner.size(); ++i) {
-        cout << "(" << net.corner[i].first << ", " << net.corner[i].second << ") ";
-    }
-    cout << endl;*/
     return;
 }
 int main(int argc, char *argv[])
@@ -266,15 +240,6 @@ int main(int argc, char *argv[])
 /*-------------------------------------------------------------------------------------------------------------------------------*/
     srand(114);
     //LShapeRoute(GCells, nets, num_net);
-    /*for (int i = 0; i < 4; ++i) {
-        clearGCellCost(GCells, grid);
-        AStarSearch(GCells, nets[i], grid, vertCapacity, horizCapacity);
-    }*/
-
-    /*for (int i = num_net - 1; i >= 0; --i) {
-        clearGCellCost(GCells, grid);
-        AStarSearch(GCells, nets[i], grid, vertCapacity, horizCapacity);
-    }*/
     for (int i = 0; i < num_net; ++i) {
         if (nets[i].HPWL < max(grid.first, grid.second) / 4) {
             clearGCellCost(GCells, grid);
@@ -287,14 +252,6 @@ int main(int argc, char *argv[])
             AStarSearch(GCells, nets[i], grid, vertCapacity, horizCapacity);
         }
     }
-    /*int overflowCnt = 0, nooverflowCnt = 0;
-    for (int i = 0; i < num_net; ++i) {
-        if (nets[i].overflow)
-            ++overflowCnt;
-        else ++nooverflowCnt;
-    }
-    cout << overflowCnt << " " << nooverflowCnt << endl;*/
-
     for (int reroute = 0; reroute < 6; ++reroute) {
         //int cnt = 0;
         for (int i = 0; i < num_net; ++i) {
@@ -408,20 +365,7 @@ int main(int argc, char *argv[])
             }
             cout << endl;
         }
-    }*/
-    /*測試priority queue
-    for (int i = 0; i < grid.second; ++i)
-        for (int j = 0; j < grid.first ; ++j)
-            GCells[i][j].costF = i;
-    for (int i = 0; i < grid.second; ++i)
-        for (int j = 0; j < grid.first ; ++j)
-            pq.push(&GCells[i][j]);
-    for (int i = 0; i < grid.second * grid.first; ++i) {
-        cout << pq.top()->coord.first << " " << pq.top()->coord.second << " " << pq.top()->costF << endl;
-        pq.pop();
-    }*/
-        
-            
+    }*/           
 /*--------------output-----------------------------------------------------------------------------------------------------------*/
     for (int i = 0; i < num_net; ++i) {
         result_file << nets[i].name << " " << nets[i].id << "\n";
