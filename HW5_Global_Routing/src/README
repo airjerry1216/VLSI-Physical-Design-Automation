@@ -1,0 +1,13 @@
+--How to Compile
+    In this directory, enter the following command:
+    $ make
+    It will generate the executable file "hw5" in "HW5/bin/".
+
+    If you want to remove it and all .o files, please enter the following command:
+    $ make clean
+
+--How to Run
+    In this directory, enter the following command:
+    Usage: ../bin/<exe>  <modified.txt file>  <result file>
+    e.g.:
+    $ ../bin/hw5 ../testcase/ibm01.modified.txt ../output/ibm01.result 
